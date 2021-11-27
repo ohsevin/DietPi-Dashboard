@@ -27,6 +27,7 @@ async fn main_handler(
                     swap: systemdata::swap().await,
                     disk: systemdata::disk().await,
                     network: systemdata::network().await,
+                    temp: systemdata::temperature().await,
                 })))
                 .await;
         }

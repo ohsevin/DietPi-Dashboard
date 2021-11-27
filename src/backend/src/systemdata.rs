@@ -1,9 +1,10 @@
 use futures::StreamExt;
 use heim::{
-    cpu, disk, host, memory, net, process,
+    cpu, disk, host, memory, net, process, sensors,
     units::{
         information::{byte, mebibyte},
         ratio::percent,
+        thermodynamic_temperature::{degree_celsius, degree_fahrenheit},
         time::minute,
     },
 };
@@ -502,4 +503,35 @@ pub fn browser_dir(path: &std::path::Path) -> Vec<shared::BrowserDirData> {
         });
     }
     file_list
+}
+
+pub async fn temperature() -> shared::CPUTemp {
+    let temps = sensors::temperatures()
+        .collect::<Vec<Result<sensors::TemperatureSensor, heim::Error>>>()
+        .await;
+    for temp_wrapped in &*temps {
+        let temp;
+        match temp_wrapped {
+            Err(_) => {
+                return shared::CPUTemp {
+                    available: false,
+                    celsius: 0.0,
+                    fahrenheit: 0.0,
+                };
+            }
+            Ok(unwrapped_temp) => temp = unwrapped_temp,
+        };
+        if temp.unit() == "cpu_thermal" {
+            return shared::CPUTemp {
+                available: true,
+                celsius: temp.current().get::<degree_celsius>(),
+                fahrenheit: temp.current().get::<degree_fahrenheit>(),
+            };
+        }
+    }
+    shared::CPUTemp {
+        available: false,
+        celsius: 0.0,
+        fahrenheit: 0.0,
+    }
 }

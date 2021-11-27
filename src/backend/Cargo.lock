@@ -613,6 +613,7 @@ dependencies = [
  "heim-net",
  "heim-process",
  "heim-runtime",
+ "heim-sensors",
 ]
 
 [[package]]
@@ -747,6 +748,16 @@ dependencies = [
  "futures-timer",
  "once_cell",
  "smol",
+]
+
+[[package]]
+name = "heim-sensors"
+version = "0.1.0-rc.1"
+source = "git+https://github.com/heim-rs/heim#b292f1535bb27c03800cdb7509fa81a40859fbbb"
+dependencies = [
+ "cfg-if",
+ "heim-common",
+ "heim-runtime",
 ]
 
 [[package]]

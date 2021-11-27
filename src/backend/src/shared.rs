@@ -35,6 +35,7 @@ pub struct SysData {
     pub swap: UsageData,
     pub disk: UsageData,
     pub network: NetData,
+    pub temp: CPUTemp,
 }
 
 #[derive(SerJson)]
@@ -124,7 +125,7 @@ pub struct GlobalData {
     pub login: bool,
 }
 
-#[derive(SerJson, Debug)]
+#[derive(SerJson)]
 pub struct BrowserDirData {
     pub path: String,
     pub name: String,
@@ -147,4 +148,11 @@ pub struct BrowserList {
 #[derive(SerJson)]
 pub struct TokenError {
     pub error: bool,
+}
+
+#[derive(SerJson)]
+pub struct CPUTemp {
+    pub available: bool,
+    pub celsius: f32,
+    pub fahrenheit: f32,
 }

@@ -207,6 +207,12 @@
     </Card>
     {#if ramData != undefined}
         <Card header="System Stats">
+            {#if socketData.temp.available}
+                CPU Temp: <span class="float-right"
+                    >{socketData.temp.celsius}'C, {socketData.temp
+                        .fahrenheit}'F</span
+                >
+            {/if}
             CPU:<span class="float-right">{socketData.cpu}/100%</span>
             <div class="bg-gray-200 dark:bg-gray-800 w-full h-3 my-1">
                 <div class="bg-green-500 h-3" style="width:{$cpuAnimate}%" />
