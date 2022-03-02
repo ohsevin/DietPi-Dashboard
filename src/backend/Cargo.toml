@@ -32,3 +32,4 @@ frontend = ["include_dir", "warp/compression"]
 lto = "fat"
 panic = "abort"
 codegen-units = 1
+opt-level = "s"
